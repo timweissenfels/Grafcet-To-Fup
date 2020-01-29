@@ -1,0 +1,20 @@
+#pragma once
+
+#include "enum_identifier.h"
+
+namespace grfc {
+    class single_statement final {
+    private:
+        const bool is_inverted = false;
+        const grfc::conn type;
+        const grfc::identifier literal_and_num; // example: char='x' , int=1;
+    public:
+        single_statement(const bool _is_inverted, const grfc::identifier _literal_and_num, const grfc::conn _type = grfc::conn::non);
+
+        char literal() const;
+        int num() const;
+        grfc::conn conn() const;
+        std::string full_name() const;
+        bool is_invert() const;
+    };
+}

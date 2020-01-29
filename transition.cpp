@@ -1,0 +1,41 @@
+#pragma once
+#include <iostream>
+#include <string>
+#include <vector>
+
+#include "transition.h"
+
+namespace grfc {
+
+    transition::transition(const std::vector<grfc::single_statement> _statements, const bool _is_inverted) : statements(_statements), is_inverted(_is_inverted) {
+    }
+
+    std::ostream& operator<<(std::ostream& os, const grfc::transition& dt) {
+        std::string str;
+        if (dt.is_inverted)
+            str.push_back('!');
+        bool in_brackets = false;
+
+        for (auto const& value : dt.statements) {
+            //if (value.conn() != grfc::conn::non)
+            //    str.push_back('(');
+
+            if (value.is_invert())
+                str += "!";
+
+            str.push_back(value.literal());
+            str += std::to_string(value.num());
+            str += " ";
+            str.push_back(static_cast<char>(value.conn()));
+            str += value.conn() != grfc::conn::non ? " " : "";
+
+            //if (in_brackets)
+            //    str.push_back(')');
+
+            //in_brackets = value.conn() != grfc::conn::non ? true : false;
+        }
+        std::cout << str;
+        return os;
+    }
+
+}
