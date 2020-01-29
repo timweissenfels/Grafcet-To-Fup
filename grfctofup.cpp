@@ -3,6 +3,9 @@
 #include <string>
 #include <memory>
 #include <algorithm>
+#include <fstream>
+#include <map>
+#include <tuple>
 #include <jsoncons/json.hpp>
 #include <jsoncons/encode_decode_json.hpp>
 
@@ -14,7 +17,35 @@
 #include "grafcet.h"
 #include "grafcet_timer.h"
 
+//FUNCTIONPLAN BUILDING BLOCK ENUM
+JSONCONS_ENUM_TRAITS_DECL(fup::bb, fc1, fc2, fc3)
+//GRAFCET CONN ENUM
+JSONCONS_ENUM_TRAITS_DECL(grfc::conn, non, dot, plus)
+//GRAFCET ACTION ENUM
+JSONCONS_ENUM_TRAITS_DECL(grfc::action, set, unset, rising_edge, falling_edge)
+//GRAFCET IDENTIFIER STRUCT
+JSONCONS_ALL_MEMBER_TRAITS_DECL(grfc::identifier, literal, number)
+//GRAFCET SINGLE_STATEMENT CLASS
+JSONCONS_ALL_MEMBER_TRAITS_DECL(grfc::single_statement, is_inverted, type, literal_and_num)
+//GRAFCET TRANSITION CLASS
+JSONCONS_ALL_MEMBER_TRAITS_DECL(grfc::transition, statements, is_inverted)
+//GRAFCET EXPRESSION CLASS
+JSONCONS_ALL_MEMBER_TRAITS_DECL(grfc::expression, count_blocks, act_with_literal)
+//GRAFCET NODE CLASS
+JSONCONS_ALL_MEMBER_TRAITS_DECL(grfc::node, step, next_step, is_initial, trans, expr, connected_to_initial)
+//GRAFCET GRAFCET CLASS
+JSONCONS_ALL_MEMBER_TRAITS_DECL(grfc::grafcet, count, building_block, nodes)
+//GRAFCET GRAFCET_TIMER CLASS
+JSONCONS_ALL_MEMBER_TRAITS_DECL(grfc::grafcet_timer, time, building_block, name)
 
+void ReplaceStringInPlace(std::string& subject, const std::string& search,
+    const std::string& replace) {
+    size_t pos = 0;
+    while ((pos = subject.find(search, pos)) != std::string::npos) {
+        subject.replace(pos, search.length(), replace);
+        pos += replace.length();
+    }
+}
 
 int main()
 {
@@ -31,9 +62,15 @@ int main()
 
 
     auto vf = std::vector<grfc::node>{ grfc::node(true, 1, transition_test, c),grfc::node(false, 1, transition_test, c) };
-    vf.push_back(grfc::node(false, 2, transition_test, c, std::pair<bool, std::shared_ptr<grfc::node>>{true, std::make_shared<grfc::node>(vf[0])}));
 
-    grfc::grafcet first_grfc(vf,fup::bb::fc1);
+    vf.push_back(grfc::node(false, 2, transition_test, c, std::pair<bool, int>{true, 1}));
 
-    std::cout << first_grfc;
+    grfc::grafcet first_grfc(vf);
+       
+    first_grfc.write_as_json_tofile("Test_Grafcet");
+
+
+    //TODO: WIE STD::VEKTOR MIT TYP PRINTEN MIT TO_JSON
+
+    return 0;
 }

@@ -8,7 +8,7 @@
 #include "enum_identifier.h"
 
 namespace grfc {
-    expression::expression(std::vector<std::pair<const grfc::identifier, const grfc::action>> _act_with_literal, fup::bb _building_block) : act_with_literal(_act_with_literal), building_block(_building_block), count_blocks(_act_with_literal.size()) {
+    expression::expression(std::vector<std::pair<const grfc::identifier, const grfc::action>> _act_with_literal) : act_with_literal(_act_with_literal), count_blocks(_act_with_literal.size()) {
 
     }
 
