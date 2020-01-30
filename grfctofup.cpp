@@ -47,6 +47,27 @@ void ReplaceStringInPlace(std::string& subject, const std::string& search,
     }
 }
 
+void grfc::grafcet::write_as_json_tofile(std::string name) {
+    jsoncons::json j;
+    std::string name_outfile = name + ".json";
+
+    std::ofstream outfile;
+    outfile.open(name_outfile);
+
+    jsoncons::json_stream_encoder encoder(outfile);
+    encoder.begin_object();
+    for (auto& value : nodes) {
+        std::string object_name = "M120.";
+        object_name.append(std::to_string(value.step));
+        encoder.name(object_name);
+        encode_json(value, encoder);
+    }
+    encoder.end_object();
+    encoder.flush();
+
+    outfile.close();
+}
+
 int main()
 {
     std::vector<grfc::single_statement> x = { 
@@ -61,9 +82,9 @@ int main()
     });
 
 
-    auto vf = std::vector<grfc::node>{ grfc::node(true, 1, transition_test, c),grfc::node(false, 1, transition_test, c) };
+    auto vf = std::vector<grfc::node>{ grfc::node(true, 1, transition_test, c),grfc::node(false, 2, transition_test, c) };
 
-    vf.push_back(grfc::node(false, 2, transition_test, c, std::pair<bool, int>{true, 1}));
+    vf.push_back(grfc::node(false, 3, transition_test, c, std::pair<bool, int>{true, 1}));
 
     grfc::grafcet first_grfc(vf);
        
