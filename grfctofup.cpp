@@ -93,6 +93,7 @@ grfc::grafcet cli_interface_get_full_grafcet() {
     for (int node_i = 0; node_i < node_count; node_i++) {
         //INITIAL STEP
         CLS();
+        std::cout << "Aktuelle Node: " << node_i << std::endl;
         bool _is_node_initial = false;
         std::cout << "Ist die Node der Initial Schritt ( 1:Ja | 0:Nein ): ";
         std::cin >> _is_node_initial;
@@ -103,6 +104,7 @@ grfc::grafcet cli_interface_get_full_grafcet() {
     
         //TRANSITION
         CLS();
+        std::cout << "Aktuelle Node: " << node_i << std::endl;
         bool is_transition_inverted = false;
         std::cout << "Soll die Transition Invertiert sein ( 1:Ja | 0:Nein ): ";
         std::cin >> is_transition_inverted;
@@ -132,13 +134,14 @@ grfc::grafcet cli_interface_get_full_grafcet() {
                 transition_single_statements_vector.push_back(grfc::single_statement(is_single_statement_inverted, grfc::identifier{ single_statement_identifier_input[0], single_statement_identifier_input.back() - '0'}, single_statement_conn));
             }
             else
-                transition_single_statements_vector.push_back(grfc::single_statement(is_single_statement_inverted, grfc::identifier{ single_statement_identifier_input[0], single_statement_identifier_input.back()-'0' })); //Bugy?
+                transition_single_statements_vector.push_back(grfc::single_statement(is_single_statement_inverted, grfc::identifier{ single_statement_identifier_input[0], single_statement_identifier_input.back()-'0' },grfc::conn::non)); //Bugy?
         }
 
         grfc::transition NODE_TRANSITION(transition_single_statements_vector,is_transition_inverted);
 
         //EXPRESSION
         CLS();
+        std::cout << "Aktuelle Node: " << node_i << std::endl;
         std::vector<grfc::single_statement> node_expression_vector;
         
         int expression_block_count = 0;
@@ -147,19 +150,28 @@ grfc::grafcet cli_interface_get_full_grafcet() {
         
         for (int expression_count_i = 0; expression_count_i < expression_block_count; expression_count_i++) {
             
+            std::string single_statement_identifier_input;
+            std::cout << "Geben Sie EINEN Bezeichner ein (BuchstabeZahl) Beispiel(x1,S2,P3): ";
+            std::cin >> single_statement_identifier_input;
+
+            int single_statement_action_input = 0;
+            std::cout << "Geben Sie EINE Aktion ein ( 0:Setzen | 1:Nicht-setzen ): ";
+            std::cin >> single_statement_action_input;
+            node_expression_vector.push_back(grfc::single_statement(false, grfc::identifier{ single_statement_identifier_input[0], single_statement_identifier_input.back() - '0' }, (grfc::action)single_statement_action_input));
         }
 
         grfc::expression NODE_EXPRESSION(node_expression_vector);
 
         //CONNECTED TO INITIAL
         CLS();
+        std::cout << "Aktuelle Node: " << node_i << std::endl;
         std::pair<bool, int> NODE_CONNECTED_TO_INTITIAL;
 
         std::cout << "Ist der Schritt mit dem Initial Schritt verbunden sein ( 1:Ja | 0:Nein ): ";
         std::cin >> NODE_CONNECTED_TO_INTITIAL.first;
         
         if (NODE_CONNECTED_TO_INTITIAL.first) {
-            std::cout << "Welche Nummer hat der Schitt";
+            std::cout << "Welche Nummer hat der Schritt: ";
             std::cin >> NODE_CONNECTED_TO_INTITIAL.second;
         } else {
             NODE_CONNECTED_TO_INTITIAL.second = 0;
