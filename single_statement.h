@@ -13,7 +13,8 @@ namespace grfc {
         const grfc::action act;
         const grfc::identifier literal_and_num; // example: char='x' , int=1;
     public:
-        single_statement(const bool _is_inverted, const grfc::identifier _literal_and_num, const grfc::conn _type = grfc::conn::non, const grfc::action _act = grfc::action::set);
+        single_statement(const bool _is_inverted, const grfc::identifier _literal_and_num, const grfc::conn _type = grfc::conn::non);
+        single_statement(const bool _is_inverted, const grfc::identifier _literal_and_num, const grfc::action _act = grfc::action::set);
 
         char literal() const;
         int num() const;
