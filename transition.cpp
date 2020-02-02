@@ -17,9 +17,6 @@ namespace grfc {
         bool in_brackets = false;
 
         for (auto const& value : dt.statements) {
-            //if (value.conn() != grfc::conn::non)
-            //    str.push_back('(');
-
             if (value.is_invert())
                 str += "!";
 
@@ -28,11 +25,6 @@ namespace grfc {
             str += " ";
             str.push_back(static_cast<char>(value.conn()));
             str += value.conn() != grfc::conn::non ? " " : "";
-
-            //if (in_brackets)
-            //    str.push_back(')');
-
-            //in_brackets = value.conn() != grfc::conn::non ? true : false;
         }
         std::cout << str;
         return os;
