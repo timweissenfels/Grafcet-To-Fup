@@ -1,10 +1,13 @@
 #pragma once
 
+#include <jsoncons/json.hpp>
+
 #include "enum_identifier.h"
 
 namespace grfc {
     class single_statement final {
     private:
+        JSONCONS_TYPE_TRAITS_FRIEND
         const bool is_inverted = false;
         const grfc::conn type;
         const grfc::identifier literal_and_num; // example: char='x' , int=1;

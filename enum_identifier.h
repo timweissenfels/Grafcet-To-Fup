@@ -13,7 +13,7 @@ namespace grfc {
     enum class action : const char { set = ' ', unset = '!', rising_edge = '\x18', falling_edge = '\x19' };
 
     //IDENTIFIER STRUCT
-    const struct identifier final {
+    struct identifier final {
         const char literal;
         const int number;
     };

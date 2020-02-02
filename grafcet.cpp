@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <iostream>
+#include <fstream>
 
 #include "grafcet.h"
 
@@ -12,6 +13,7 @@ namespace grfc {
     const std::vector<grfc::node> grafcet::get_node_vec() const{
         return nodes;
     }
+
     std::ostream& operator<<(std::ostream& os, const grafcet& dt)
     {
         for (auto const& value : dt.nodes) {
