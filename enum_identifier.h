@@ -10,7 +10,7 @@ namespace grfc {
     //CONN and ACTION ENUMS
     //dot == and ; plus == or
     enum class conn : const char { non = ' ', dot = 'o', plus = '+' };
-    enum class action : const char { set = ' ', unset = '!', rising_edge = '\x18', falling_edge = '\x19' };
+    enum class action : const char { set = ' ', unset = '!', rising_edge = 'r', falling_edge = 'f' };
 
     //IDENTIFIER STRUCT
     struct identifier final {
