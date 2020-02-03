@@ -28,7 +28,7 @@ JSONCONS_ENUM_TRAITS_DECL(grfc::action, set, unset, rising_edge, falling_edge)
 //GRAFCET IDENTIFIER STRUCT
 JSONCONS_ALL_MEMBER_TRAITS_DECL(grfc::identifier, literal, number)
 //GRAFCET SINGLE_STATEMENT CLASS
-JSONCONS_ALL_MEMBER_TRAITS_DECL(grfc::single_statement, is_inverted, type, literal_and_num)
+JSONCONS_ALL_MEMBER_TRAITS_DECL(grfc::single_statement, is_inverted, type, act, literal_and_num)
 //GRAFCET TRANSITION CLASS
 JSONCONS_ALL_MEMBER_TRAITS_DECL(grfc::transition, statements, is_inverted)
 //GRAFCET EXPRESSION CLASS
