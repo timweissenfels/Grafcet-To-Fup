@@ -17,7 +17,7 @@
 #include "grafcet.h"
 #include "grafcet_timer.h"
 
-#define _USER_TESTING_ 1
+#define _AUTO_DEBUGING_ 1
 
 //FUNCTIONPLAN BUILDING BLOCK ENUM
 JSONCONS_ENUM_TRAITS_DECL(fup::bb, fc1, fc2, fc3)
@@ -186,21 +186,20 @@ grfc::grafcet cli_interface_get_full_grafcet() {
 
 #elif defined _AUTO_DEBUGING_
     
-    std::vector<grfc::single_statement> x = {
-    grfc::single_statement(false, grfc::identifier{'S',1},grfc::conn::dot), grfc::single_statement(false,grfc::identifier{'S',2},grfc::conn::plus), grfc::single_statement(true,grfc::identifier{'S',3})
-};
+    std::vector<grfc::single_statement> trans = {
+    grfc::single_statement(false, grfc::identifier{'S',1},grfc::conn::dot), grfc::single_statement(false,grfc::identifier{'S',2},grfc::conn::plus), grfc::single_statement(true,grfc::identifier{'S',3},grfc::conn::non)};
 
-    grfc::transition transition_test(x, true);
+    grfc::transition transition_test(trans, true);
 
-    grfc::expression c(std::vector<std::pair<const grfc::identifier, const grfc::action>> {
-        std::pair<const grfc::identifier, const grfc::action>{grfc::identifier{ 'x', 1 }, grfc::action::unset},
-            std::pair<const grfc::identifier, const grfc::action>{grfc::identifier{ 'x', 2 }, grfc::action::unset}
-    });
+    std::vector<grfc::single_statement> expr {
+        grfc::single_statement(false,grfc::identifier{ 'x', 1 }, grfc::action::unset),
+            grfc::single_statement(false,grfc::identifier{ 'x', 2 }, grfc::action::unset)
+    };
+    grfc::expression c(expr);
 
+    auto ALL_NODES = std::vector<grfc::node>{ grfc::node(true, 1, transition_test, c),grfc::node(false, 2, transition_test, c),grfc::node(false, 3, transition_test, c),grfc::node(false, 4, transition_test, c) };
 
-    auto ALL_NODES = std::vector<grfc::node>{ grfc::node(true, 1, transition_test, c),grfc::node(false, 2, transition_test, c) };
-
-    ALL_NODES.push_back(grfc::node(false, 3, transition_test, c, std::pair<bool, int>{true, 1}));
+    ALL_NODES.push_back(grfc::node(false, 5, transition_test, c, std::pair<bool, int>{true, 1}));
     return grfc::grafcet(ALL_NODES, fup::bb::fc1);
 #endif
 }
