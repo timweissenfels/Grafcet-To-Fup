@@ -4,3 +4,4 @@
 !*.cpp
 !.gitignore
 !makefile
+!jsoncons-0.144.0
