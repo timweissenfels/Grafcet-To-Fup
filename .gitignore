@@ -3,4 +3,5 @@
 !*.h
 !*.cpp
 !.gitignore
+!linux_setup.sh
 !current_json_format.json
