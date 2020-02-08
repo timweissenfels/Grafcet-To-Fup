@@ -3,5 +3,4 @@
 !*.h
 !*.cpp
 !.gitignore
-!makefile
-!jsoncons-0.144.0
+!current_json_format.json

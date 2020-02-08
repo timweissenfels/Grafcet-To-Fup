@@ -14,6 +14,7 @@ namespace grfc {
             this->next_step = this->step + 1;
 
     }
+
     std::ostream& operator<<(std::ostream& os, const node& dt)
     {
         std::cout << "Step: " << dt.step << std::endl;

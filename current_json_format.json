@@ -1,0 +1,158 @@
+{
+    "M120.1": {
+        "connected_to_initial": [false, 0], 
+        "expr": {
+            "act_with_literal": [
+                [
+                    {
+                        "literal": 120, 
+                        "number": 1
+                    }, "unset"
+                ], 
+                [
+                    {
+                        "literal": 120, 
+                        "number": 2
+                    }, "unset"
+                ]
+            ], 
+            "count_blocks": 2
+        }, 
+        "is_initial": true, 
+        "next_step": 2, 
+        "step": 1, 
+        "trans": {
+            "is_inverted": true, 
+            "statements": [
+                {
+                    "is_inverted": false, 
+                    "literal_and_num": {
+                        "literal": 83, 
+                        "number": 1
+                    }, 
+                    "type": "dot"
+                }, 
+                {
+                    "is_inverted": false, 
+                    "literal_and_num": {
+                        "literal": 83, 
+                        "number": 2
+                    }, 
+                    "type": "plus"
+                }, 
+                {
+                    "is_inverted": true, 
+                    "literal_and_num": {
+                        "literal": 83, 
+                        "number": 3
+                    }, 
+                    "type": "non"
+                }
+            ]
+        }
+    }, 
+    "M120.2": {
+        "connected_to_initial": [false, 0], 
+        "expr": {
+            "act_with_literal": [
+                [
+                    {
+                        "literal": 120, 
+                        "number": 1
+                    }, "unset"
+                ], 
+                [
+                    {
+                        "literal": 120, 
+                        "number": 2
+                    }, "unset"
+                ]
+            ], 
+            "count_blocks": 2
+        }, 
+        "is_initial": false, 
+        "next_step": 3, 
+        "step": 2, 
+        "trans": {
+            "is_inverted": true, 
+            "statements": [
+                {
+                    "is_inverted": false, 
+                    "literal_and_num": {
+                        "literal": 83, 
+                        "number": 1
+                    }, 
+                    "type": "dot"
+                }, 
+                {
+                    "is_inverted": false, 
+                    "literal_and_num": {
+                        "literal": 83, 
+                        "number": 2
+                    }, 
+                    "type": "plus"
+                }, 
+                {
+                    "is_inverted": true, 
+                    "literal_and_num": {
+                        "literal": 83, 
+                        "number": 3
+                    }, 
+                    "type": "non"
+                }
+            ]
+        }
+    }, 
+    "M120.3": {
+        "connected_to_initial": [true, 1], 
+        "expr": {
+            "act_with_literal": [
+                [
+                    {
+                        "literal": 120, 
+                        "number": 1
+                    }, "unset"
+                ], 
+                [
+                    {
+                        "literal": 120, 
+                        "number": 2
+                    }, "unset"
+                ]
+            ], 
+            "count_blocks": 2
+        }, 
+        "is_initial": false, 
+        "next_step": 1, 
+        "step": 3, 
+        "trans": {
+            "is_inverted": true, 
+            "statements": [
+                {
+                    "is_inverted": false, 
+                    "literal_and_num": {
+                        "literal": 83, 
+                        "number": 1
+                    }, 
+                    "type": "dot"
+                }, 
+                {
+                    "is_inverted": false, 
+                    "literal_and_num": {
+                        "literal": 83, 
+                        "number": 2
+                    }, 
+                    "type": "plus"
+                }, 
+                {
+                    "is_inverted": true, 
+                    "literal_and_num": {
+                        "literal": 83, 
+                        "number": 3
+                    }, 
+                    "type": "non"
+                }
+            ]
+        }
+    }
+}
