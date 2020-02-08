@@ -19,10 +19,10 @@ namespace grfc {
     {
         std::cout << "Step: " << dt.step << std::endl;
         std::cout << "Next Step: " << dt.next_step << std::endl;
-        std::cout << "Is Initial: " << dt.is_initial << std::endl;
+        std::cout << std::boolalpha << "Is Initial: " << dt.is_initial << std::endl;
         std::cout << "Expression: " << dt.expr << std::endl;
         std::cout << "Transition: " << dt.trans << std::endl;
-        std::cout << "Is Connected to Inital: " << dt.connected_to_initial.first << std::endl;
+        std::cout << std::boolalpha << "Is Connected to Inital: " << dt.connected_to_initial.first << std::endl;
         return os;
     }
 }
