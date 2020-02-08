@@ -9,7 +9,12 @@ jobs:
     
     steps:
     - uses: actions/checkout@v2
+    
+    - name: GivePermisson
+      run: chmod +x ./linux_setup.sh
+    
     - name: configure
-      run: sudo ./linux_setup.sh
+      run: ./linux_setup.sh
+    
     - name: make
       run: make
