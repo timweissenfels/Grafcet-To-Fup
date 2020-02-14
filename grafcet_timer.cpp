@@ -4,8 +4,8 @@
 #include "grafcet_timer.h"
 
 namespace grfc {
-	grafcet_timer::grafcet_timer(float _time = 0, std::string _name = "T1", fup::bb _building_block) : time(_time), name(_name), building_block(_building_block)
+	grafcet_timer::grafcet_timer(float _time, int number) : time(_time), ident(grfc::identifier{ 'T', number })
 	{
-
+		timestr = "S5T#" + std::to_string(time);
 	}
 }
