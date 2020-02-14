@@ -9,6 +9,12 @@ namespace grfc {
 
     transition::transition(const std::vector<grfc::single_statement> _statements, const bool _is_inverted) : statements(_statements), is_inverted(_is_inverted) {
     }
+    
+    transition::transition(const std::vector<grfc::grafcet_timer> _timer) : timer(_timer), is_inverted(false) {
+    }
+    
+    transition::transition(const std::vector<grfc::single_statement> _statements,const std::vector<grfc::grafcet_timer> _timer) : statements(_statements), timer(_timer), is_inverted(false) {
+    }
 
     std::ostream& operator<<(std::ostream& os, const grfc::transition& dt) {
         std::string str;
@@ -17,9 +23,6 @@ namespace grfc {
         bool in_brackets = false;
 
         for (auto const& value : dt.statements) {
-            //if (value.conn() != grfc::conn::non)
-            //    str.push_back('(');
-
             if (value.is_invert())
                 str += "!";
 
@@ -28,11 +31,6 @@ namespace grfc {
             str += " ";
             str.push_back(static_cast<char>(value.conn()));
             str += value.conn() != grfc::conn::non ? " " : "";
-
-            //if (in_brackets)
-            //    str.push_back(')');
-
-            //in_brackets = value.conn() != grfc::conn::non ? true : false;
         }
         std::cout << str;
         return os;
