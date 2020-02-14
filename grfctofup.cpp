@@ -6,6 +6,7 @@
 #include <fstream>
 #include <map>
 #include <tuple>
+#include <Windows.h>
 #include <jsoncons/json.hpp>
 #include <jsoncons/encode_decode_json.hpp>
 
@@ -214,5 +215,7 @@ int main()
        
     first_grfc.write_as_json_tofile("Test_Grafcet");
 
+    ShellExecute(NULL, L"open", L"C:Users\\Tim\\source\\repos\\Schule\\grfc_to_fup_graphic\\bin\\Debug", NULL, NULL, SW_SHOWDEFAULT);
+    
     return 0;
 }
