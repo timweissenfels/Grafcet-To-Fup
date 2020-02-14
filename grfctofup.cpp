@@ -32,13 +32,13 @@ JSONCONS_ALL_MEMBER_TRAITS_DECL(grfc::single_statement, is_inverted, type, act, 
 //GRAFCET TRANSITION CLASS
 JSONCONS_ALL_MEMBER_TRAITS_DECL(grfc::transition, statements, is_inverted)
 //GRAFCET EXPRESSION CLASS
-JSONCONS_ALL_MEMBER_TRAITS_DECL(grfc::expression, count_blocks, act_with_literal)
+JSONCONS_ALL_MEMBER_TRAITS_DECL(grfc::expression, count_blocks, act_with_literal,timer)
 //GRAFCET NODE CLASS
 JSONCONS_ALL_MEMBER_TRAITS_DECL(grfc::node, step, next_step, is_initial, trans, expr, connected_to_initial)
 //GRAFCET GRAFCET CLASS
 JSONCONS_ALL_MEMBER_TRAITS_DECL(grfc::grafcet, count, building_block, nodes)
 //GRAFCET GRAFCET_TIMER CLASS
-JSONCONS_ALL_MEMBER_TRAITS_DECL(grfc::grafcet_timer, time, building_block, name)
+JSONCONS_ALL_MEMBER_TRAITS_DECL(grfc::grafcet_timer, timestr,time, ident)
 
 void ReplaceStringInPlace(std::string& subject, const std::string& search,
     const std::string& replace) {
@@ -195,7 +195,11 @@ grfc::grafcet cli_interface_get_full_grafcet() {
         grfc::single_statement(false,grfc::identifier{ 'x', 1 }, grfc::action::unset),
             grfc::single_statement(false,grfc::identifier{ 'x', 2 }, grfc::action::unset)
     };
-    grfc::expression c(expr);
+    std::vector<grfc::grafcet_timer> timer{
+    grfc::grafcet_timer(5.0,1),
+        grfc::grafcet_timer(2.0,2)
+    };
+    grfc::expression c(expr,timer);
 
     auto ALL_NODES = std::vector<grfc::node>{ grfc::node(true, 1, transition_test, c),grfc::node(false, 2, transition_test, c),grfc::node(false, 3, transition_test, c),grfc::node(false, 4, transition_test, c) };
 
