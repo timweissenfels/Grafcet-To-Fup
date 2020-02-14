@@ -10,6 +10,11 @@
 
 namespace grfc {
     expression::expression(std::vector<grfc::single_statement> _act_with_literal) : act_with_literal(_act_with_literal), count_blocks(_act_with_literal.size()) {
+    }
+    expression::expression(std::vector<grfc::single_statement> _act_with_literal, std::vector<grfc::grafcet_timer> _timer) : timer(_timer), act_with_literal(_act_with_literal), count_blocks(_act_with_literal.size() + _timer.size()) {
+
+    }
+    expression::expression(std::vector<grfc::grafcet_timer> _timer) : timer(_timer), count_blocks(_timer.size()) {
 
     }
 
