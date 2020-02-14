@@ -10,7 +10,9 @@ namespace grfc {
         const float time;
         const grfc::identifier ident;
         std::string timestr;
+        const grfc::conn conn_type;
     public:
         grafcet_timer(float, int);
+        grafcet_timer(float, int, grfc::conn);
     };
 }
