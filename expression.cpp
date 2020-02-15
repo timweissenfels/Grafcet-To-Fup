@@ -9,18 +9,12 @@
 #include "single_statement.h"
 
 namespace grfc {
-    expression::expression(std::vector<grfc::single_statement> _act_with_literal) : act_with_literal(_act_with_literal), count_blocks(_act_with_literal.size()) {
-    }
-    expression::expression(std::vector<grfc::single_statement> _act_with_literal, std::vector<grfc::grafcet_timer> _timer) : timer(_timer), act_with_literal(_act_with_literal), count_blocks(_act_with_literal.size() + _timer.size()) {
-
-    }
-    expression::expression(std::vector<grfc::grafcet_timer> _timer) : timer(_timer), count_blocks(_timer.size()) {
-
+    expression::expression(std::vector<grfc::single_statement> _action_block) : action_block(_action_block), count_blocks(_action_block.size()) {
     }
 
     std::ostream& operator<<(std::ostream& os, const grfc::expression& dt) {
         std::string str;
-        for (auto const& value : dt.act_with_literal) {
+        for (auto const& value : dt.action_block) {
             str.push_back(static_cast<char>(value.action()));
             str.push_back(value.literal());
             str.append(std::to_string(value.num()));
