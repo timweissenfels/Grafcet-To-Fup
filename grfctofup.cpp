@@ -155,13 +155,13 @@ grfc::grafcet cli_interface_get_full_grafcet() {
 #elif defined _AUTO_DEBUGING_
 
 	std::vector<grfc::single_statement> trans_statement = {
-	grfc::single_statement(grfc::grafcet_timer(3.0,2,grfc::conn::non),nullptr,false), grfc::single_statement(false,grfc::identifier{'S',2},grfc::conn::plus,nullptr,false), grfc::single_statement(true,grfc::identifier{'S',3},grfc::conn::non,nullptr,false) };
+	grfc::single_statement(grfc::grafcet_timer(3.0,2,grfc::conn::non),grfc::conn::dot,nullptr,false), grfc::single_statement(false,grfc::identifier{'S',2},grfc::conn::plus,nullptr,false), grfc::single_statement(true,grfc::identifier{'S',3},grfc::conn::non,nullptr,false) };
 
 	grfc::transition transition_test(trans_statement,false);
 
 	std::vector<grfc::single_statement> expr{
 		grfc::single_statement(false,grfc::identifier{ 'x', 1 }, grfc::action::unset,nullptr,false),
-		grfc::single_statement(grfc::grafcet_timer(2.0,4),nullptr,false)
+		grfc::single_statement(grfc::grafcet_timer(2.0,4),grfc::conn::non,nullptr,false)
 	};
 
 	grfc::expression c(expr);
