@@ -3,18 +3,22 @@
 #include <jsoncons/json.hpp>
 
 #include "enum_identifier.h"
-
+#include "grafcet_timer.h"
 namespace grfc {
     class single_statement final {
     private:
         JSONCONS_TYPE_TRAITS_FRIEND
-        const bool is_inverted = false;
+        bool is_conditional = false;
+        const bool is_inverted = false, has_conditional = false;
         const grfc::conn type;
         const grfc::action act;
-        const grfc::identifier literal_and_num; // example: char='x' , int=1;
+        std::shared_ptr<grfc::identifier> literal_and_num; // example: char='x' , int=1;
+        std::shared_ptr<grfc::grafcet_timer> timer;
+        std::shared_ptr<grfc::single_statement> conditional_statement;
     public:
-        single_statement(const bool _is_inverted, const grfc::identifier _literal_and_num, const grfc::conn _type = grfc::conn::non);
-        single_statement(const bool _is_inverted, const grfc::identifier _literal_and_num, const grfc::action _act = grfc::action::set);
+        single_statement(const bool, const grfc::identifier, const grfc::conn, std::shared_ptr<grfc::single_statement>, const bool);
+        single_statement(const bool, const grfc::identifier, const grfc::action, std::shared_ptr<grfc::single_statement> , const bool);
+        single_statement(const grfc::grafcet_timer, std::shared_ptr<grfc::single_statement>, const bool);
 
         char literal() const;
         int num() const;
