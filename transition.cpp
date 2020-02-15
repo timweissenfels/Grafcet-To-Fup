@@ -9,12 +9,6 @@ namespace grfc {
 
     transition::transition(const std::vector<grfc::single_statement> _statements, const bool _is_inverted) : statements(_statements), is_inverted(_is_inverted) {
     }
-    
-    transition::transition(const std::vector<grfc::grafcet_timer> _timer) : timer(_timer), is_inverted(false) {
-    }
-    
-    transition::transition(const std::vector<grfc::single_statement> _statements,const std::vector<grfc::grafcet_timer> _timer) : statements(_statements), timer(_timer), is_inverted(false) {
-    }
 
     std::ostream& operator<<(std::ostream& os, const grfc::transition& dt) {
         std::string str;
