@@ -18,7 +18,7 @@ namespace grfc {
     public:
         single_statement(const bool, const grfc::identifier, const grfc::conn, std::shared_ptr<grfc::single_statement>, const bool);
         single_statement(const bool, const grfc::identifier, const grfc::action, std::shared_ptr<grfc::single_statement> , const bool);
-        single_statement(const grfc::grafcet_timer, std::shared_ptr<grfc::single_statement>, const bool);
+        single_statement(const grfc::grafcet_timer, const grfc::conn, std::shared_ptr<grfc::single_statement>, const bool);
 
         char literal() const;
         int num() const;
