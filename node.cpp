@@ -15,6 +15,11 @@ namespace grfc {
 
     }
 
+	const grfc::expression node::get_expr() const
+	{
+		return this->expr;
+	}
+
     std::ostream& operator<<(std::ostream& os, const node& dt)
     {
         std::cout << "Step: " << dt.step << std::endl;

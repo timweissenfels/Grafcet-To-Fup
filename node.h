@@ -19,6 +19,7 @@ namespace grfc {
     public:
         int step;
         node(bool _is_initial, int _step, const grfc::transition _trans, const grfc::expression _expr, const std::pair<bool, int> _connected_to_initial = std::pair<bool, int>(false, 0));
+        const grfc::expression get_expr() const;
         friend std::ostream& operator<<(std::ostream& os, const node& dt);
     };
 }
