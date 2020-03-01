@@ -23,7 +23,7 @@ namespace grfc {
             conditional_statement = _conditional_statement;
         }
     }
-    single_statement::single_statement(const grfc::grafcet_timer _timer,const grfc::conn _type, std::shared_ptr<grfc::single_statement> _conditional_statement = nullptr, const bool _has_conditional = false)
+    single_statement::single_statement(const grfc::grafcet_timer _timer,const grfc::conn _type = grfc::conn::non, std::shared_ptr<grfc::single_statement> _conditional_statement = nullptr, const bool _has_conditional = false)
         : is_inverted(false), act(grfc::action::timer), type(_type), timer(std::make_shared<grfc::grafcet_timer>(_timer)) {
         if (has_conditional) {
             if (_conditional_statement.get()->has_conditional)
