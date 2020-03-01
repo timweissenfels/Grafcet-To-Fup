@@ -9,15 +9,15 @@ jobs:
     
     steps:
     - uses: actions/checkout@v2
+      
+    - name: setup_boost
+      run: apt-get install libboost-all-dev
     
     - name: GivePermisson
       run: chmod +x ./linux_setup.sh
     
     - name: configure
       run: ./linux_setup.sh
-      
-    - name: setup_boost
-      run: apt-get install libboost-all-dev
       
     - name: make
       run: make
