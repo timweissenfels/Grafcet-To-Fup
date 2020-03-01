@@ -111,10 +111,17 @@ int get_user_input() {
 			std::cout << '[' << expr.lit << ';' << expr.num << ';' << expr.op << ';' << std::boolalpha << expr.setorunset << ']' << std::endl;
 			if (expr.conditional_expr.size() > 0) {
 				for (auto& transits : expr.conditional_expr) {
-					if (transits.transition.op.has_value())
-						std::cout << '[' << transits.transition.lit << ';' << transits.transition.num << ';' << transits.transition.op << ']' << std::endl;
-					else
-						std::cout << '[' << transits.transition.lit << ';' << transits.transition.num << ']' << std::endl;
+					#ifdef _WIN32
+						if (transits.transition.op.has_value())
+							std::cout << '[' << transits.transition.lit << ';' << transits.transition.num << ';' << transits.transition.op << ']' << std::endl;
+						else
+							std::cout << '[' << transits.transition.lit << ';' << transits.transition.num << ']' << std::endl;
+					#else
+						if (transits.transition.op.value)
+							std::cout << '[' << transits.transition.lit << ';' << transits.transition.num << ';' << transits.transition.op << ']' << std::endl;
+						else
+							std::cout << '[' << transits.transition.lit << ';' << transits.transition.num << ']' << std::endl;
+					#endif
 				}
 			}
 		}
