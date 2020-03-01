@@ -13,6 +13,7 @@
 #include <boost/fusion/adapted/struct/adapt_struct.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/optional/optional_io.hpp>
+#include <boost/spirit/include/qi_attr.hpp>
 
 struct trans {
 	char lit;
@@ -77,7 +78,7 @@ namespace client
 		auto const operator_conn = (qi::string("and") | qi::string("or") | qi::string("non"));
 
 		auto const trans_input = identifier_input[phx::ref(temp_trans.transition.lit) = qi::_1, phx::ref(temp_trans.transition.num) = qi::_2] >>
-			-operator_conn[phx::ref(temp_trans.transition.op) = qi::_1];
+			(-operator_conn | qi::attr(boost::optional<std::string>("non")))[phx::ref(temp_trans.transition.op) = qi::_1];
 
 		auto const optional_cond = qi::char_('(') >>
 			*trans_input[phx::ref(temp_trans.according_expr) = phx::ref(exp_trans_counter), phx::push_back(phx::ref(saved_transits_expr_intern), phx::ref(temp_trans))] >>
