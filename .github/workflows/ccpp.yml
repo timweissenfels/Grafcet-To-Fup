@@ -11,7 +11,7 @@ jobs:
     - uses: actions/checkout@v2
       
     - name: setup_boost
-      run: apt-get install libboost-all-dev
+      run: sudo apt-get install libboost-all-dev
     
     - name: GivePermisson
       run: chmod +x ./linux_setup.sh
