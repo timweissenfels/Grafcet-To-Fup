@@ -1,76 +1,127 @@
-#pragma once
-#include "grafcet.h"
+#include <iostream>
+#include <string>
+#include <vector>
 
-namespace grfc {
-	namespace user_input {
-		//GENERIC - code reduction purpose
-		template <class T>
-		T get_generic(std::string user_message, bool std_endl_before_cin = false, bool std_endl_after_cin = false) {
-			std::cout << user_message;
-			if (std_endl_before_cin)
-				std::cout << std::endl;
-			T var;
-			std::cin >> var;
-			if (std_endl_after_cin)
-				std::cout << std::endl;
+#include <boost/bind.hpp>
+#include <boost/config/warning_disable.hpp>
+#include <boost/spirit/include/qi.hpp>
+#include <boost/spirit/include/qi_alternative.hpp>
+#include <boost/spirit/include/phoenix_core.hpp>
+#include <boost/spirit/include/phoenix.hpp>
+#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/spirit/include/qi_action.hpp>
+#include <boost/fusion/adapted/struct/adapt_struct.hpp>
+#include <boost/fusion/include/adapt_struct.hpp>
+#include <boost/optional/optional_io.hpp>
 
-			return var;
-		}
-		//Clears Console
-		void CLS()
-		{
-			#if defined _WIN32
-				system("cls");
-			#elif defined (__LINUX__) || defined(__gnu_linux__) || defined(__linux__)
-				system("clear");
-			#endif
-		}
-		//NODE
-		namespace node {
-			int get_node_count() {
-				return get_generic<int>("Anzahl der Nodes: ");;
-			}
-			bool get_is_node_initial() {
-				return get_generic<bool>("Ist die Node der Initial Schritt ( 1:Ja | 0:Nein ): ", false, true);
-			}
-		}
-		//TRANSITION
-		namespace transition {
-			bool get_is_transition_initial() {
-				return get_generic<bool>("Soll die Transition Invertiert sein ( 1:Ja | 0:Nein ): ");
-			}
-			int get_transition_statement_count() {
-				return get_generic<int>("Anzahl der Bedingungen in der Transition: ");
-			}
-		}
-		//SINGLE_STATEMENT
-		namespace single_statement {
-			bool get_is_single_statement_inverted() {
-				return get_generic<bool>("Ist das Statement Invertiert ( 1:Ja | 0:Nein ):");
-			}
-			std::string get_single_statement_identifier_input() {
-				return get_generic<std::string>("Geben Sie EINEN Bezeichner ein (BuchstabeZahl) Beispiel(x1,S2,P3): ");
-			}
-			int get_single_statement_conn_input() {
-				return get_generic<int>("Welche Verbindung besteht zum naechsten Bezeichner(1:Und - Verknuepfung | 2 : Oder - Verknuepfung) : ");
-			}
-			int get_single_statement_action_input() {
-				return get_generic<int>("Geben Sie EINE Aktion ein ( 0:Setzen | 1:Nicht-setzen ): ");
-			}
-		}
-		//EXPRESSION
-		namespace expression {
-			int get_expression_block_count() {
-				return get_generic<int>("Anzahl der Aktionen der Node: ");
-			}
-			bool get_node_connected_to_initial_first() {
-				return get_generic<bool>("Ist der Schritt mit dem Initial Schritt verbunden sein ( 1:Ja | 0:Nein ): ");
-			}
-			int get_node_connected_to_initial_second() {
-				return get_generic<int>("Welche Nummer hat der Schritt: ");
-			}
+struct trans {
+	char lit;
+	int num;
+	boost::optional<std::string> op;
+};
 
+struct trans_expr_intern {
+	trans transition;
+	int according_expr;
+};
+
+struct expr {
+	char lit;
+	int num;
+	std::string op;
+	std::vector<trans_expr_intern> conditional_expr;
+	bool setorunset;
+};
+
+BOOST_FUSION_ADAPT_STRUCT(
+	trans,
+	(char, lit),
+	(int, num),
+	(boost::optional<std::string>, op))
+
+BOOST_FUSION_ADAPT_STRUCT(
+	expr,
+	(char, lit),
+	(int, num),
+	(std::string, op),
+	(bool, setorunset))
+
+
+static volatile int exp_trans_counter = 0;	//
+
+void f() {									//UGLY FIX
+	exp_trans_counter++;
+}											//
+
+namespace client
+{
+	namespace qi = boost::spirit::qi;
+	namespace ascii = boost::spirit::ascii;
+	namespace phx = boost::phoenix;
+
+	template <typename Iterator>
+	std::pair<std::vector<expr>, bool> parse_expr(Iterator first, Iterator last)
+	{
+		using qi::phrase_parse;
+		using ascii::space;
+		exp_trans_counter = 0;
+
+		std::vector<expr> saved_return_expressions;
+		std::vector<trans_expr_intern> saved_transits_expr_intern;
+
+		trans_expr_intern temp_trans;
+
+		auto const identifier_input = (qi::char_("a-zA-Z") >> qi::int_);
+
+		auto const operator_input = (qi::string("=") | qi::string(":="));
+		auto const operator_conn = (qi::string("and") | qi::string("or") | qi::string("non"));
+
+		auto const trans_input = identifier_input[phx::ref(temp_trans.transition.lit) = qi::_1, phx::ref(temp_trans.transition.num) = qi::_2] >>
+			-operator_conn[phx::ref(temp_trans.transition.op) = qi::_1];
+
+		auto const optional_cond = qi::char_('(') >>
+			*trans_input[phx::ref(temp_trans.according_expr) = phx::ref(exp_trans_counter), phx::push_back(phx::ref(saved_transits_expr_intern), phx::ref(temp_trans))] >>
+			qi::char_(')')[phx::bind(&f)];
+
+		auto const expr_input = *(identifier_input >> operator_input >> qi::bool_ >> -optional_cond);
+
+		bool r = phrase_parse(first, last, expr_input, space, saved_return_expressions);
+
+		if (first != last)
+			r = false;
+
+		for (auto& tr : saved_transits_expr_intern) {
+			saved_return_expressions[tr.according_expr].conditional_expr.push_back(tr);
 		}
 
+		return std::pair<std::vector<expr>, bool>{saved_return_expressions, r};
 	}
+}
+
+int get_user_input() {
+
+	std::cout << "[Expression Parser]" << std::endl;
+	std::cout << "Beispiele:\n " << std::endl;
+
+	std::string str;
+	auto parsed = client::parse_expr(str.begin(), str.end());
+	if (parsed.second)
+	{
+		for (auto& expr : parsed.first) {
+			std::cout << '[' << expr.lit << ';' << expr.num << ';' << expr.op << ';' << std::boolalpha << expr.setorunset << ']' << std::endl;
+			if (expr.conditional_expr.size() > 0) {
+				for (auto& transits : expr.conditional_expr) {
+					if (transits.transition.op.has_value())
+						std::cout << '[' << transits.transition.lit << ';' << transits.transition.num << ';' << transits.transition.op << ']' << std::endl;
+					else
+						std::cout << '[' << transits.transition.lit << ';' << transits.transition.num << ']' << std::endl;
+				}
+			}
+		}
+	}
+	else
+	{
+		std::cout << "Parsing nicht Erfolgreich\n";
+	}
+	return 0;
 }
