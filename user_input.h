@@ -104,6 +104,7 @@ int get_user_input() {
 	std::cout << "Beispiele:\n " << std::endl;
 
 	std::string str;
+	std::getline(std::cin, str);
 	auto parsed = client::parse_expr(str.begin(), str.end());
 	if (parsed.second)
 	{
@@ -111,17 +112,10 @@ int get_user_input() {
 			std::cout << '[' << expr.lit << ';' << expr.num << ';' << expr.op << ';' << std::boolalpha << expr.setorunset << ']' << std::endl;
 			if (expr.conditional_expr.size() > 0) {
 				for (auto& transits : expr.conditional_expr) {
-					#ifdef _WIN32
-						if (transits.transition.op.has_value())
-							std::cout << '[' << transits.transition.lit << ';' << transits.transition.num << ';' << transits.transition.op << ']' << std::endl;
-						else
-							std::cout << '[' << transits.transition.lit << ';' << transits.transition.num << ']' << std::endl;
-					#else
-						if (transits.transition.op.value)
-							std::cout << '[' << transits.transition.lit << ';' << transits.transition.num << ';' << transits.transition.op << ']' << std::endl;
-						else
-							std::cout << '[' << transits.transition.lit << ';' << transits.transition.num << ']' << std::endl;
-					#endif
+					if (transits.transition.op.value().size() > 0)
+						std::cout << '[' << transits.transition.lit << ';' << transits.transition.num << ';' << transits.transition.op << ']' << std::endl;
+					else
+						std::cout << '[' << transits.transition.lit << ';' << transits.transition.num << ']' << std::endl;
 				}
 			}
 		}
