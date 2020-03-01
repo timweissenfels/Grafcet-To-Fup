@@ -7,7 +7,8 @@
 #include <map>
 #include <tuple>
 #include <jsoncons/json.hpp>
-#include <jsoncons/encode_decode_json.hpp>
+#include <jsoncons/encode_json.hpp>
+#include <jsoncons/decode_json.hpp>
 
 #include "enum_identifier.h"
 #include "single_statement.h"
