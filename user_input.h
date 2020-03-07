@@ -10,10 +10,10 @@
 #include <boost/spirit/include/phoenix.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/qi_action.hpp>
+#include <boost/spirit/include/qi_attr.hpp>
 #include <boost/fusion/adapted/struct/adapt_struct.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/optional/optional_io.hpp>
-#include <boost/spirit/include/qi_attr.hpp>
 
 struct trans {
 	char lit;
@@ -73,9 +73,10 @@ namespace client
 		trans_expr_intern temp_trans;
 
 		auto const identifier_input = (qi::char_("a-zA-Z") >> qi::int_);
+		auto const timer_input = (qi::double_ >> qi::string("s"));
 
 		auto const operator_input = (qi::string("=") | qi::string(":="));
-		auto const operator_conn = (qi::string("and") | qi::string("or") | qi::string("non"));
+		auto const operator_conn = (qi::string("and") | qi::string("or"));
 
 		auto const trans_input = identifier_input[phx::ref(temp_trans.transition.lit) = qi::_1, phx::ref(temp_trans.transition.num) = qi::_2] >>
 			(-operator_conn | qi::attr(boost::optional<std::string>("non")))[phx::ref(temp_trans.transition.op) = qi::_1];
@@ -99,14 +100,14 @@ namespace client
 	}
 }
 
-int get_user_input() {
+int get_expression_user_input() {
 
-	std::cout << "[Expression Parser]" << std::endl;
-	std::cout << "Beispiele:\n " << std::endl;
+	std::cout << "Expression: ";
 
 	std::string str;
 	std::getline(std::cin, str);
 	auto parsed = client::parse_expr(str.begin(), str.end());
+	std::vector<grfc::single_statement> sing_state_vec;
 	if (parsed.second)
 	{
 		for (auto& expr : parsed.first) {
