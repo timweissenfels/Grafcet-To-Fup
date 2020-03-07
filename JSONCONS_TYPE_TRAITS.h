@@ -22,7 +22,6 @@ namespace jsoncons {
 			Json j(alloc);
 
 			if (val)
-				if(val.get() == "")
 					j.try_emplace("Value", val.get());
 
 			return j;
