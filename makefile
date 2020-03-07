@@ -1,4 +1,4 @@
-CFLAGS = -O -std=c++2a
+CFLAGS = -O 
 CC = g++
 INCLUDES= -I./jsoncons/include
 SRC = grfctofup.cpp
