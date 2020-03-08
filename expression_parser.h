@@ -56,10 +56,10 @@ namespace parser
 		auto const operator_conn = (qi::string("and") | qi::string("or"));
 
 		auto const timer_input = (qi::double_ >> qi::char_('s') >> qi::char_("/") >> identifier_input >> (-operator_conn | qi::attr(boost::optional<std::string>())))
-			[phx::ref(temp_trans.transition_time) = phx::construct<trans_timer>(qi::_1, qi::_2, qi::_4, qi::_5, qi::_6, phx::ref(trans_order_counter)), phx::bind(&trans_order_counter_func)];
+			[phx::ref(temp_trans.transition_time) = phx::construct<trans_timer>(qi::_1, qi::_2, qi::_4, qi::_5, qi::_6), phx::ref(temp_trans.trans_num) = phx::ref(trans_order_counter), phx::bind(&trans_order_counter_func)];
 
 		auto const trans_input = (((-qi::char_('!') | qi::attr(boost::optional<char>())) >> identifier_input >> (-operator_conn | qi::attr(boost::optional<std::string>())))
-			[phx::ref(temp_trans.transit_norm) = phx::construct<trans_normal>(qi::_1, qi::_2, qi::_3, qi::_4, phx::ref(trans_order_counter)), phx::bind(&trans_order_counter_func)] | timer_input);
+			[phx::ref(temp_trans.transit_norm) = phx::construct<trans_normal>(qi::_1, qi::_2, qi::_3, qi::_4), phx::ref(temp_trans.trans_num) = phx::ref(trans_order_counter), phx::bind(&trans_order_counter_func)] | timer_input);
 
 		auto const optional_cond = qi::char_('(') >>
 			*trans_input[phx::ref(temp_trans.according_expr) = phx::ref(exp_trans_counter), phx::push_back(phx::ref(saved_transits_expr_intern), phx::ref(temp_trans))] >>
