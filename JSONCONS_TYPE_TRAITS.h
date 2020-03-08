@@ -29,9 +29,9 @@ namespace jsoncons {
 	};
 } // namespace jsoncons
 
-JSONCONS_ALL_MEMBER_TRAITS_DECL(trans_normal, lit, num, setorunset, op, trans_num)
-JSONCONS_ALL_MEMBER_TRAITS_DECL(trans_timer, time_count, unit, lit, num, trans_num, op)
-JSONCONS_ALL_MEMBER_TRAITS_DECL(transition, transit_norm, transition_time)
+JSONCONS_ALL_MEMBER_TRAITS_DECL(trans_normal, lit, num, setorunset, op)
+JSONCONS_ALL_MEMBER_TRAITS_DECL(trans_timer, time_count, unit, lit, num, op)
+JSONCONS_ALL_MEMBER_TRAITS_DECL(transition, transit_norm, transition_time, trans_num)
 JSONCONS_ALL_MEMBER_TRAITS_DECL(expression, lit, num, op, conditional_expr)
 JSONCONS_ALL_MEMBER_TRAITS_DECL(node, num, is_initial, is_connected_to_initial, expressions, transitions)
 
