@@ -27,12 +27,6 @@ BOOST_FUSION_ADAPT_STRUCT(
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
-	transition,
-	(boost::optional<trans_normal>, transit_norm)
-	(boost::optional<trans_timer>, transition_time)
-)
-
-BOOST_FUSION_ADAPT_STRUCT(
 	expression,
 	(char, lit),
 	(int, num),
