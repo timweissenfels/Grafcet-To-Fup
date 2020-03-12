@@ -46,7 +46,7 @@ namespace parser
 			[phx::ref(temp_trans.transit_norm) = phx::construct<trans_normal>(qi::_1, qi::_2, qi::_3, qi::_4), phx::ref(temp_trans.trans_num) = phx::ref(trans_order_counter), phx::bind(&trans_order_counter_func)] | timer_input);
 
 		bool r = phrase_parse(first, last,
-			*trans_input[phx::ref(temp_trans.according_expr) = 0, phx::push_back(phx::ref(transitions), phx::ref(temp_trans))], space);
+			*trans_input[phx::ref(temp_trans.according_expr) = 0, phx::push_back(phx::ref(transitions), phx::ref(temp_trans)), phx::bind(&reset_transition, phx::ref(temp_trans))], space);
 
 		if (first != last)
 			r = false;
