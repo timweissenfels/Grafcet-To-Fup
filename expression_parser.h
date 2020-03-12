@@ -31,6 +31,11 @@ void trans_order_counter_func() {
 	trans_order_counter++;
 }
 
+void reset_transition(transition& tr) {
+	tr.transit_norm = boost::none;
+	tr.transition_time = boost::none;
+}
+
 namespace parser
 {
 	namespace qi = boost::spirit::qi;
@@ -61,8 +66,9 @@ namespace parser
 		auto const trans_input = (((-qi::char_('!') | qi::attr(boost::optional<char>())) >> identifier_input >> (-operator_conn | qi::attr(boost::optional<std::string>())))
 			[phx::ref(temp_trans.transit_norm) = phx::construct<trans_normal>(qi::_1, qi::_2, qi::_3, qi::_4), phx::ref(temp_trans.trans_num) = phx::ref(trans_order_counter), phx::bind(&trans_order_counter_func)] | timer_input);
 
+
 		auto const optional_cond = qi::char_('(') >>
-			*trans_input[phx::ref(temp_trans.according_expr) = phx::ref(exp_trans_counter), phx::push_back(phx::ref(saved_transits_expr_intern), phx::ref(temp_trans))] >>
+			*trans_input[phx::ref(temp_trans.according_expr) = phx::ref(exp_trans_counter), phx::push_back(phx::ref(saved_transits_expr_intern), phx::ref(temp_trans)),phx::bind(&reset_transition,phx::ref(temp_trans))] >>
 			qi::char_(')')[phx::bind(&exp_trans_counter_func)];
 
 		auto const expr_input = *(identifier_input >> operator_input >> qi::bool_ >> -optional_cond);
