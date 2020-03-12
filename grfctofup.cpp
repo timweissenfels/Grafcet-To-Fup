@@ -36,7 +36,6 @@ void write_as_json_tofile(std::string name, std::vector<node> nodes) {
 }
 
 int main() {
-
 	int node_count;
 	std::cout << "Anzahl der Schritte: ";
 	std::cin >> node_count;
