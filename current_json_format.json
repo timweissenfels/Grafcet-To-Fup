@@ -1,158 +1,248 @@
 {
     "M120.1": {
-        "connected_to_initial": [false, 0], 
-        "expr": {
-            "act_with_literal": [
-                [
+        "expressions": [
+            {
+                "conditional_expr": [
                     {
-                        "literal": 120, 
-                        "number": 1
-                    }, "unset"
+                        "trans_num": 0, 
+                        "transit_norm": {}, 
+                        "transition_time": {
+                            "Value": {
+                                "lit": 120, 
+                                "num": 4, 
+                                "op": {
+                                    "Value": "and"
+                                }, 
+                                "time_count": 2.0, 
+                                "unit": 115
+                            }
+                        }
+                    }, 
+                    {
+                        "trans_num": 1, 
+                        "transit_norm": {
+                            "Value": {
+                                "lit": 112, 
+                                "num": 3, 
+                                "op": {
+                                    "Value": "or"
+                                }, 
+                                "setorunset": {
+                                    "Value": -52
+                                }
+                            }
+                        }, 
+                        "transition_time": {}
+                    }, 
+                    {
+                        "trans_num": 2, 
+                        "transit_norm": {}, 
+                        "transition_time": {
+                            "Value": {
+                                "lit": 120, 
+                                "num": 6, 
+                                "op": {
+                                    "Value": "and"
+                                }, 
+                                "time_count": 4.0, 
+                                "unit": 115
+                            }
+                        }
+                    }, 
+                    {
+                        "trans_num": 3, 
+                        "transit_norm": {
+                            "Value": {
+                                "lit": 112, 
+                                "num": 3, 
+                                "op": {
+                                    "Value": ""
+                                }, 
+                                "setorunset": {
+                                    "Value": -52
+                                }
+                            }
+                        }, 
+                        "transition_time": {}
+                    }
                 ], 
-                [
+                "lit": 112, 
+                "num": 1, 
+                "op": ":="
+            }, 
+            {
+                "conditional_expr": [
                     {
-                        "literal": 120, 
-                        "number": 2
-                    }, "unset"
-                ]
-            ], 
-            "count_blocks": 2
-        }, 
+                        "trans_num": 4, 
+                        "transit_norm": {
+                            "Value": {
+                                "lit": 108, 
+                                "num": 2, 
+                                "op": {
+                                    "Value": "and"
+                                }, 
+                                "setorunset": {
+                                    "Value": -52
+                                }
+                            }
+                        }, 
+                        "transition_time": {}
+                    }, 
+                    {
+                        "trans_num": 5, 
+                        "transit_norm": {
+                            "Value": {
+                                "lit": 108, 
+                                "num": 3, 
+                                "op": {
+                                    "Value": "or"
+                                }, 
+                                "setorunset": {
+                                    "Value": -52
+                                }
+                            }
+                        }, 
+                        "transition_time": {}
+                    }, 
+                    {
+                        "trans_num": 6, 
+                        "transit_norm": {}, 
+                        "transition_time": {
+                            "Value": {
+                                "lit": 120, 
+                                "num": 6, 
+                                "op": {
+                                    "Value": ""
+                                }, 
+                                "time_count": 2.0, 
+                                "unit": 115
+                            }
+                        }
+                    }
+                ], 
+                "lit": 112, 
+                "num": 2, 
+                "op": ":="
+            }
+        ], 
+        "is_connected_to_initial": false, 
         "is_initial": true, 
-        "next_step": 2, 
-        "step": 1, 
-        "trans": {
-            "is_inverted": true, 
-            "statements": [
-                {
-                    "is_inverted": false, 
-                    "literal_and_num": {
-                        "literal": 83, 
-                        "number": 1
-                    }, 
-                    "type": "dot"
-                }, 
-                {
-                    "is_inverted": false, 
-                    "literal_and_num": {
-                        "literal": 83, 
-                        "number": 2
-                    }, 
-                    "type": "plus"
-                }, 
-                {
-                    "is_inverted": true, 
-                    "literal_and_num": {
-                        "literal": 83, 
-                        "number": 3
-                    }, 
-                    "type": "non"
+        "num": 1, 
+        "transitions": [
+            {
+                "trans_num": 0, 
+                "transit_norm": {}, 
+                "transition_time": {
+                    "Value": {
+                        "lit": 120, 
+                        "num": 4, 
+                        "op": {
+                            "Value": "or"
+                        }, 
+                        "time_count": 2.0, 
+                        "unit": 115
+                    }
                 }
-            ]
-        }
+            }, 
+            {
+                "trans_num": 1, 
+                "transit_norm": {
+                    "Value": {
+                        "lit": 112, 
+                        "num": 2, 
+                        "op": {
+                            "Value": "or"
+                        }, 
+                        "setorunset": {
+                            "Value": -52
+                        }
+                    }
+                }, 
+                "transition_time": {
+                    "Value": {
+                        "lit": 120, 
+                        "num": 4, 
+                        "op": {
+                            "Value": "or"
+                        }, 
+                        "time_count": 2.0, 
+                        "unit": 115
+                    }
+                }
+            }, 
+            {
+                "trans_num": 2, 
+                "transit_norm": {
+                    "Value": {
+                        "lit": 112, 
+                        "num": 1, 
+                        "op": {
+                            "Value": ""
+                        }, 
+                        "setorunset": {
+                            "Value": -52
+                        }
+                    }
+                }, 
+                "transition_time": {
+                    "Value": {
+                        "lit": 120, 
+                        "num": 4, 
+                        "op": {
+                            "Value": "or"
+                        }, 
+                        "time_count": 2.0, 
+                        "unit": 115
+                    }
+                }
+            }
+        ]
     }, 
     "M120.2": {
-        "connected_to_initial": [false, 0], 
-        "expr": {
-            "act_with_literal": [
-                [
-                    {
-                        "literal": 120, 
-                        "number": 1
-                    }, "unset"
-                ], 
-                [
-                    {
-                        "literal": 120, 
-                        "number": 2
-                    }, "unset"
-                ]
-            ], 
-            "count_blocks": 2
-        }, 
+        "expressions": [
+            {
+                "conditional_expr": [], 
+                "lit": 112, 
+                "num": 2, 
+                "op": "="
+            }
+        ], 
+        "is_connected_to_initial": true, 
         "is_initial": false, 
-        "next_step": 3, 
-        "step": 2, 
-        "trans": {
-            "is_inverted": true, 
-            "statements": [
-                {
-                    "is_inverted": false, 
-                    "literal_and_num": {
-                        "literal": 83, 
-                        "number": 1
-                    }, 
-                    "type": "dot"
+        "num": 2, 
+        "transitions": [
+            {
+                "trans_num": 0, 
+                "transit_norm": {
+                    "Value": {
+                        "lit": 112, 
+                        "num": 2, 
+                        "op": {
+                            "Value": "and"
+                        }, 
+                        "setorunset": {
+                            "Value": -52
+                        }
+                    }
                 }, 
-                {
-                    "is_inverted": false, 
-                    "literal_and_num": {
-                        "literal": 83, 
-                        "number": 2
-                    }, 
-                    "type": "plus"
+                "transition_time": {}
+            }, 
+            {
+                "trans_num": 1, 
+                "transit_norm": {
+                    "Value": {
+                        "lit": 112, 
+                        "num": 3, 
+                        "op": {
+                            "Value": ""
+                        }, 
+                        "setorunset": {
+                            "Value": -52
+                        }
+                    }
                 }, 
-                {
-                    "is_inverted": true, 
-                    "literal_and_num": {
-                        "literal": 83, 
-                        "number": 3
-                    }, 
-                    "type": "non"
-                }
-            ]
-        }
-    }, 
-    "M120.3": {
-        "connected_to_initial": [true, 1], 
-        "expr": {
-            "act_with_literal": [
-                [
-                    {
-                        "literal": 120, 
-                        "number": 1
-                    }, "unset"
-                ], 
-                [
-                    {
-                        "literal": 120, 
-                        "number": 2
-                    }, "unset"
-                ]
-            ], 
-            "count_blocks": 2
-        }, 
-        "is_initial": false, 
-        "next_step": 1, 
-        "step": 3, 
-        "trans": {
-            "is_inverted": true, 
-            "statements": [
-                {
-                    "is_inverted": false, 
-                    "literal_and_num": {
-                        "literal": 83, 
-                        "number": 1
-                    }, 
-                    "type": "dot"
-                }, 
-                {
-                    "is_inverted": false, 
-                    "literal_and_num": {
-                        "literal": 83, 
-                        "number": 2
-                    }, 
-                    "type": "plus"
-                }, 
-                {
-                    "is_inverted": true, 
-                    "literal_and_num": {
-                        "literal": 83, 
-                        "number": 3
-                    }, 
-                    "type": "non"
-                }
-            ]
-        }
+                "transition_time": {}
+            }
+        ]
     }
 }
