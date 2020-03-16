@@ -5,76 +5,95 @@
 #include <string>
 #include <vector>
 #include <variant>
+#include <limits>
 #include <type_traits>
 
 template <typename T0, typename ... Ts>
 std::ostream& operator<< (std::ostream& s, std::variant<T0, Ts...> const& v)
 {
-    std::visit([&](auto&& arg) { s << arg; }, v); return s;
-    //https://stackoverflow.com/a/47168851/8964221
+	std::visit([&](auto&& arg) { s << arg; }, v); return s;
+	//https://stackoverflow.com/a/47168851/8964221
 }
 
 template <typename T0, typename ... Ts>
 void assign(T0& s, std::variant<Ts...> const& v)
 {
-    s = std::get<T0>(v);
+	s = std::get<T0>(v);
 }
 
 template <typename TInput>
 class easy_input final {
 public:
-    TInput user_input;
-    std::vector<std::variant<
-        int, float, bool,
-        double, char, std::string,
-        short int, unsigned short int, unsigned int,
-        long int, unsigned long int, long long int,
-        unsigned long long int, unsigned char, long double
-        >> values;
-    const std::string output;
+	TInput user_input;
+	std::vector<std::variant<
+		int, float, bool,
+		double, char, std::string,
+		short int, unsigned short int, unsigned int,
+		long int, unsigned long int, long long int,
+		unsigned long long int, unsigned char, long double
+		>> values;
+	const std::string output;
 
-    easy_input(std::string _output) : output(_output) { }
+	easy_input(std::string _output) : output(_output) { }
 
-    template<typename T>
-    easy_input<TInput> operator+ (easy_input<T> source)
-    {
-        std::string temp;
+	template<typename T>
+	easy_input<TInput> operator+ (easy_input<T> source)
+	{
+		std::string temp;
 
-        std::cout << "Input type: " << typeid(source.user_input).name() << std::endl
-            << source.output << std::endl;
-        auto s = static_cast<T>(source.user_input);
+		std::cout << "Input type: " << typeid(source.user_input).name() << std::endl
+			<< source.output << std::endl;
+		auto s = static_cast<T>(source.user_input);
 
-        if (std::is_same<T, bool>::value)
-            std::cin >> std::boolalpha >> s;
-        else if (std::is_same<T, std::string>::value) {
-            std::getline(std::cin, temp);
-        }
-        else
-            std::cin >> s;
+		if (std::is_same<T, bool>::value) {
+			do {
+				if (std::cin.fail())
+					std::cout << "Wrong Input Try Again!" << std::endl;
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				std::cin >> std::boolalpha >> s;
+			} while (std::cin.fail());
+		}
+		else if (std::is_same<T, std::string>::value) {
+			do {
+				if (std::cin.fail())
+					std::cout << "Wrong Input Try Again!" << std::endl;
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				std::getline(std::cin, temp);
+			} while (std::cin.fail());
+		}
+		else {
+			do {
+				if (std::cin.fail())
+					std::cout << "Wrong Input Try Again!" << std::endl;
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				std::cin >> s;
+			} while (std::cin.fail());
+		}
 
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
-        if (std::is_same<T, std::string>::value)
-            source.values.push_back(temp);
-        else
-            source.values.push_back(s);
+		if (std::is_same<T, std::string>::value)
+			source.values.push_back(temp);
+		else
+			source.values.push_back(s);
 
 
-        this->values.insert(this->values.end(), source.values.begin(), source.values.end());
+		this->values.insert(this->values.end(), source.values.begin(), source.values.end());
 
-        return *this;
-    }
+		return *this;
+	}
 
-    void print() {
-        for (auto& print : this->values) {
-            std::cout << print << std::endl;
-        }
-    }
+	void print() {
+		for (auto& print : this->values) {
+			std::cout << print << std::endl;
+		}
+	}
 
-    template <typename T>
-    void assign_var(size_t index, T& var) {
-        assign(var, this->values[index]);
-    }
+	template <typename T>
+	void assign_var(size_t index, T& var) {
+		assign(var, this->values[index]);
+	}
 };
 
 #define input(type,console_output) easy_input<type>(console_output)
