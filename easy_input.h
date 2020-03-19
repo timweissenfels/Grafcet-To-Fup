@@ -60,17 +60,17 @@ public:
 			<< source.output << std::endl;
 		auto s = static_cast<T>(source.user_input);
 
-		if (std::is_same<T, bool>::value) {
+		if constexpr (std::is_same<T, bool>::value) {
 			s = input_getter<T>([]() { T s; std::cin >> std::boolalpha >> s; return s; });
 			std::cout << "Eingabe: " << std::boolalpha << s << std::endl;
 		}
-		else if (std::is_same<T, std::string>::value) {
-			temp = input_getter<std::string>([]() { std::string var; std::getline(std::cin, var); return var; });
-			std::cout << "Eingabe: " << temp << std::endl;
+		else if constexpr ( std::is_same<T, std::string>::value) {
+			s = input_getter<std::string>([]() { std::string var; std::getline(std::cin, var); return var; });
+			std::cout << "Eingabe: " << s << std::endl;
 		}
 		else {
 			s = input_getter<T>([]() { T s; std::cin >> s; return s; });
-			std::cout << "Eingabe: " << std::boolalpha << s << std::endl;
+			std::cout << "Eingabe: " << s << std::endl;
 		}
 
 		if (std::is_same<T, std::string>::value)
