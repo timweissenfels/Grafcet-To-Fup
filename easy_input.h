@@ -23,6 +23,21 @@ void assign(T0& s, std::variant<Ts...> const& v)
 
 template <typename TInput>
 class easy_input final {
+private:
+
+	template <typename T, typename lambda>
+	T input_getter(lambda t) {
+		T ret_val;
+		do {
+			if (std::cin.fail())
+				std::cout << "Wrong Input Try Again!" << std::endl;
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			ret_val = t();
+		} while (std::cin.fail());
+		return ret_val;
+	}
+
 public:
 	TInput user_input;
 	std::vector<std::variant<
@@ -46,31 +61,16 @@ public:
 		auto s = static_cast<T>(source.user_input);
 
 		if (std::is_same<T, bool>::value) {
-			do {
-				if (std::cin.fail())
-					std::cout << "Wrong Input Try Again!" << std::endl;
-				std::cin.clear();
-				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-				std::cin >> std::boolalpha >> s;
-			} while (std::cin.fail());
+			s = input_getter<T>([]() { T s; std::cin >> std::boolalpha >> s; return s; });
+			std::cout << "Eingabe: " << std::boolalpha << s << std::endl;
 		}
 		else if (std::is_same<T, std::string>::value) {
-			do {
-				if (std::cin.fail())
-					std::cout << "Wrong Input Try Again!" << std::endl;
-				std::cin.clear();
-				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-				std::getline(std::cin, temp);
-			} while (std::cin.fail());
+			temp = input_getter<std::string>([]() { std::string var; std::getline(std::cin, var); return var; });
+			std::cout << "Eingabe: " << temp << std::endl;
 		}
 		else {
-			do {
-				if (std::cin.fail())
-					std::cout << "Wrong Input Try Again!" << std::endl;
-				std::cin.clear();
-				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-				std::cin >> s;
-			} while (std::cin.fail());
+			s = input_getter<T>([]() { T s; std::cin >> s; return s; });
+			std::cout << "Eingabe: " << std::boolalpha << s << std::endl;
 		}
 
 		if (std::is_same<T, std::string>::value)
